@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "PortalDoorComponent.h"
 #include "RenderingThread.h"
@@ -170,6 +170,12 @@ public:
 	uint32 GetAllocatedSize(void) const { return(FPrimitiveSceneProxy::GetAllocatedSize()); }
 };
 
+TArray<UPortalDoorComponent*> UPortalDoorComponent::AllPortalDoors;
+const TArray<UPortalDoorComponent*>& UPortalDoorComponent::GetAllPortalDoors()
+{
+	return AllPortalDoors;
+}
+
 UPortalDoorComponent::UPortalDoorComponent(const FObjectInitializer& initializer) : Super(initializer)
 {
 	SetPortalDoorWidth(300);
@@ -218,7 +224,7 @@ bool UPortalDoorComponent::SetPortalDoorMeshTriangles(const TArray<FPortalDoorMe
 {
 	CustomMeshTris = Triangles;
 
-	//ÖØÐÂ´´½¨SceneProxy
+	//é‡æ–°åˆ›å»ºSceneProxy
 	MarkRenderStateDirty();
 	UpdateBounds();
 
@@ -237,6 +243,24 @@ void UPortalDoorComponent::ClearPortalDoorMeshTriangles()
 	CustomMeshTris.Reset();
 	MarkRenderStateDirty();
 	UpdateBounds();
+}
+
+void UPortalDoorComponent::BeginPlay()
+{
+	Super::BeginPlay();
+	if (!AllPortalDoors.Contains(this))
+	{
+		AllPortalDoors.Add(this);
+	}
+}
+
+void UPortalDoorComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+	if (AllPortalDoors.Contains(this))
+	{
+		AllPortalDoors.Remove(this);
+	}
+	Super::EndPlay(EndPlayReason);
 }
 
 FPrimitiveSceneProxy* UPortalDoorComponent::CreateSceneProxy()

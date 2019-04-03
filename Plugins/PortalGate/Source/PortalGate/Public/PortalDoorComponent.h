@@ -48,7 +48,14 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Components|PortalDoor")
 		void ClearPortalDoorMeshTriangles();
+
+	static const TArray<UPortalDoorComponent*>& GetAllPortalDoors();
+protected:
+	virtual void BeginPlay() override;
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 private:
+	static TArray<UPortalDoorComponent*> AllPortalDoors;
+
 	float m_PortalDoorHeight;
 	float m_PortalDoorWidth;
 
