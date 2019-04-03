@@ -28,7 +28,6 @@ public class PortalGate : ModuleRules
 				"Core",
                 "PT1",
                 "InputCore",
-                "CustomMeshComponent",
 				"RenderCore",
                 "ShaderCore",
                 "RHI"
