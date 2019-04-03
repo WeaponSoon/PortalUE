@@ -15,3 +15,8 @@ Saved
 *.code-workspace
 Plugins/*/Binaries/
 Plugins/*/Intermediate/
+.DS_Store
+*/.DS_Store
+*/*/.DS_Store
+*/*/*/.DS_Store
+*/*/*/*/.DS_Store
